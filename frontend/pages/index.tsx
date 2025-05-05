@@ -61,7 +61,7 @@ export default function Home() {
 
       <div className="bg-[#F9FAFB] py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <h1 className="text-2xl sm:text-3xl font-semibold text-[#0A2540] mb-8">
-          Welcome back, Kalash
+          Welcome back, {user?.name || "Guest"}
         </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
