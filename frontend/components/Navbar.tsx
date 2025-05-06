@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useState, useEffect, useRef } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { FiPieChart } from "react-icons/fi";
 import Link from "next/link";
@@ -7,6 +9,21 @@ import { useAuth } from "../context/AuthContext";
 const Navbar = () => {
   const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
@@ -16,9 +33,7 @@ const Navbar = () => {
           href="/"
           className="text-xl font-bold text-gray-900 flex items-center gap-1"
         >
-          <span>
-            <FiPieChart />
-          </span>
+          <FiPieChart />
           Coincise
         </Link>
 
@@ -36,7 +51,7 @@ const Navbar = () => {
         </nav>
 
         {/* Profile Dropdown */}
-        <div className="relative">
+        <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="text-2xl text-gray-600 hover:text-gray-800"
@@ -45,7 +60,7 @@ const Navbar = () => {
           </button>
 
           {menuOpen && (
-            <div className="absolute right-0 mt-2 w-52 bg-white border border-gray-200 rounded-xl shadow-xl z-50">
+            <div className="absolute right-0 mt-2 w-52 bg-white border border-gray-200 rounded-xl shadow-xl z-50 animate-fadeIn">
               {user ? (
                 <div className="px-4 py-3 space-y-2">
                   <p className="text-sm text-gray-700 font-medium">

@@ -9,13 +9,32 @@ import IncomeExpenseChart from "../components/IncomeExpenseChart";
 import RecentTransactions from "../components/RecentTransactions";
 import ExpenseModal from "../components/ExpenseModal";
 import { ExpenseData } from "../components/ExpenseModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user, token } = useAuth();
+  const [modalType, setModalType] = useState<"income" | "expense">("expense");
+  const { user, token, loading } = useAuth();
+  const [transactions, setTransactions] = useState<ExpenseData[]>([]);
+  const router = useRouter();
+
+  const openModal = (type: "income" | "expense") => {
+    setModalType(type);
+    setIsModalOpen(true);
+  };
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login");
+    }
+  }, [user, loading]);
+
+  if (loading) {
+    return <div className="text-center mt-10">Loading...</div>;
+  }
 
   const handleAddExpense = async (expense: ExpenseData) => {
     if (!user?.email || !token) {
@@ -37,14 +56,13 @@ export default function Home() {
           },
         }
       );
+      setTransactions((prev) => [response.data, ...prev]);
       console.log("Transaction added:", response.data);
-      toggleModal();
+      setIsModalOpen(false);
     } catch (error) {
       console.error("Error adding transaction:", error);
     }
   };
-
-  const toggleModal = () => setIsModalOpen((prev) => !prev);
 
   return (
     <>
@@ -55,8 +73,9 @@ export default function Home() {
 
       <ExpenseModal
         isOpen={isModalOpen}
-        onClose={toggleModal}
+        onClose={() => setIsModalOpen(false)}
         onSave={handleAddExpense}
+        type={modalType}
       />
 
       <div className="bg-[#F9FAFB] py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -68,7 +87,7 @@ export default function Home() {
           <div className="space-y-6 lg:col-span-2">
             <MonthlyIncomeCard />
             <MonthlyExpenseCard />
-            <AddExpenseButton onClick={toggleModal} />
+            <AddExpenseButton onOpen={openModal} />
             <BudgetAlert />
           </div>
 

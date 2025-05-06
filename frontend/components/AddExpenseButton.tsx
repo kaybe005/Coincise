@@ -2,14 +2,26 @@
 
 import React from "react";
 
-const AddExpenseButton = ({ onClick }: { onClick: () => void }) => {
+interface AddExpenseButtonProps {
+  onOpen: (type: "income" | "expense") => void;
+}
+
+const AddExpenseButton = ({ onOpen }: AddExpenseButtonProps) => {
   return (
-    <button
-      onClick={onClick}
-      className="bg-[#0057FF] text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-[#0040CC] transition"
-    >
-    + Add Expense
-    </button>
+    <div className="flex gap-4">
+      <button
+        onClick={() => onOpen("income")}
+        className="px-4 py-2 rounded-md bg-green-500 text-white text-sm hover:bg-green-600 transition"
+      >
+        + Add Income
+      </button>
+      <button
+        onClick={() => onOpen("expense")}
+        className="px-4 py-2 rounded-md bg-red-500 text-white text-sm hover:bg-red-600 transition"
+      >
+        + Add Expense
+      </button>
+    </div>
   );
 };
 
