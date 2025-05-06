@@ -31,7 +31,6 @@ const ExpenseModal: React.FC<ExpenseModalProps> = ({
     description: "",
   });
 
-  // Reset form when modal type or open state changes
   useEffect(() => {
     if (isOpen) {
       setForm({
@@ -68,20 +67,22 @@ const ExpenseModal: React.FC<ExpenseModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg border border-[#E6EBF2]">
-        <h2 className="text-xl font-semibold text-[#0A2540] mb-4">
+      <div className="bg-white dark:bg-[#0A2540] rounded-lg p-6 w-full max-w-md shadow-lg border border-[#E6EBF2] dark:border-gray-700">
+        <h2 className="text-xl font-semibold text-[#0A2540] dark:text-white mb-4">
           Add New {type.charAt(0).toUpperCase() + type.slice(1)}
         </h2>
 
         <div className="space-y-4">
           {/* Category */}
           <div>
-            <label className="block text-sm text-gray-700 mb-1">Category</label>
+            <label className="block text-sm text-gray-700 dark:text-gray-300 mb-1">
+              Category
+            </label>
             <select
               name="category"
               value={form.category}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#0057FF]"
+              className="w-full px-3 py-2 border rounded-md text-sm bg-white dark:bg-[#2D3748] dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#0057FF]"
             >
               <option value="">Select</option>
               {categoryOptions.map((cat) => (
@@ -94,31 +95,35 @@ const ExpenseModal: React.FC<ExpenseModalProps> = ({
 
           {/* Amount */}
           <div>
-            <label className="block text-sm text-gray-700 mb-1">Amount</label>
+            <label className="block text-sm text-gray-700 dark:text-gray-300 mb-1">
+              Amount
+            </label>
             <input
               type="number"
               name="amount"
               value={form.amount}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#0057FF]"
+              className="w-full px-3 py-2 border rounded-md text-sm bg-white dark:bg-[#2D3748] dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#0057FF]"
             />
           </div>
 
           {/* Date */}
           <div>
-            <label className="block text-sm text-gray-700 mb-1">Date</label>
+            <label className="block text-sm text-gray-700 dark:text-gray-300 mb-1">
+              Date
+            </label>
             <input
               type="date"
               name="date"
               value={form.date}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#0057FF]"
+              className="w-full px-3 py-2 border rounded-md text-sm bg-white dark:bg-[#2D3748] dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#0057FF]"
             />
           </div>
 
           {/* Description */}
           <div>
-            <label className="block text-sm text-gray-700 mb-1">
+            <label className="block text-sm text-gray-700 dark:text-gray-300 mb-1">
               Description
             </label>
             <textarea
@@ -126,7 +131,7 @@ const ExpenseModal: React.FC<ExpenseModalProps> = ({
               value={form.description}
               onChange={handleChange}
               rows={2}
-              className="w-full px-3 py-2 border rounded-md text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#0057FF]"
+              className="w-full px-3 py-2 border rounded-md text-sm resize-none bg-white dark:bg-[#2D3748] dark:text-white dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#0057FF]"
               placeholder="Optional"
             />
           </div>
@@ -135,7 +140,7 @@ const ExpenseModal: React.FC<ExpenseModalProps> = ({
         <div className="flex justify-end mt-6 gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-md bg-gray-200 text-sm hover:bg-gray-300"
+            className="px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-white text-sm hover:bg-gray-300 dark:hover:bg-gray-500"
           >
             Cancel
           </button>

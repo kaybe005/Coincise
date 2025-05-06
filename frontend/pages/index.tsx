@@ -36,6 +36,23 @@ export default function Home() {
     return <div className="text-center mt-10">Loading...</div>;
   }
 
+  const fetchTransactions = async () => {
+    if (!user?.email || !token) return;
+    try {
+      const res = await axios.get(
+        `http://localhost:5005/api/transactions/${user.email}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setTransactions(res.data);
+    } catch (error) {
+      console.error("Failed to load transactions:", error);
+    }
+  };
+
+  fetchTransactions();
+
   const handleAddExpense = async (expense: ExpenseData) => {
     if (!user?.email || !token) {
       console.error("User not authenticated");
@@ -43,7 +60,7 @@ export default function Home() {
     }
 
     try {
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:5005/api/transactions",
         {
           ...expense,
@@ -56,8 +73,7 @@ export default function Home() {
           },
         }
       );
-      setTransactions((prev) => [response.data, ...prev]);
-      console.log("Transaction added:", response.data);
+      await fetchTransactions();
       setIsModalOpen(false);
     } catch (error) {
       console.error("Error adding transaction:", error);
@@ -78,27 +94,27 @@ export default function Home() {
         type={modalType}
       />
 
-      <div className="bg-[#F9FAFB] py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <h1 className="text-2xl sm:text-3xl font-semibold text-[#0A2540] mb-8">
+      <div className="bg-[#F9FAFB] dark:bg-[#0D1117] py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <h1 className="text-2xl sm:text-3xl font-semibold text-[#0A2540] dark:text-white mb-8">
           Welcome back, {user?.name || "Guest"}
         </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="space-y-6 lg:col-span-2">
-            <MonthlyIncomeCard />
-            <MonthlyExpenseCard />
+            <MonthlyIncomeCard transactions={transactions} />
+            <MonthlyExpenseCard transactions={transactions} />
             <AddExpenseButton onOpen={openModal} />
             <BudgetAlert />
           </div>
 
           <div>
-            <ExpenseChart />
+            <ExpenseChart transactions={transactions} />
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          <IncomeExpenseChart />
-          <RecentTransactions />
+          <IncomeExpenseChart transactions={transactions} />
+          <RecentTransactions transactions={transactions} />
         </div>
       </div>
     </>
