@@ -36,7 +36,7 @@ const Navbar = () => {
           href="/"
           className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-1"
         >
-          <FiPieChart />
+          {FiPieChart({}) as unknown as JSX.Element}
           Coincise
         </Link>
 
@@ -58,7 +58,9 @@ const Navbar = () => {
             onClick={toggleTheme}
             className="text-2xl text-gray-700 dark:text-gray-300 hover:text-blue-600 transition"
           >
-            {theme === "light" ? <BsMoon /> : <BsSun />}
+            {theme === "light"
+              ? (BsMoon({ className: "text-xl" }) as unknown as JSX.Element)
+              : (BsSun({ className: "text-xl" }) as unknown as JSX.Element)}
           </button>
 
           <div className="relative" ref={dropdownRef}>
@@ -67,7 +69,7 @@ const Navbar = () => {
               className="text-2xl text-gray-600 dark:text-gray-300 hover:text-gray-800"
             >
               <span className="relative top-[3px] left-[5px]">
-                <FaUserCircle />
+                {FaUserCircle({}) as unknown as JSX.Element}
               </span>
             </button>
 
