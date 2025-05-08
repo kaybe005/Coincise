@@ -4,7 +4,7 @@ Coincise is a modern full-stack personal finance tracking web app. It helps user
 
 ## 🔗 Live Demo
 
-🌐 [View Coincise App](https://your-vercel-url.vercel.app)
+🌐 [View Coincise App](https://coincise-brown.vercel.app/login)
 
 ---
 
