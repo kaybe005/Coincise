@@ -23,17 +23,17 @@ interface Transaction {
 const getIconForCategory = (category: string) => {
   switch (category.toLowerCase()) {
     case "food":
-      return <FaUtensils />;
+      return FaUtensils({}) as JSX.Element;
     case "bills":
-      return <FaHome />;
+      return FaHome({}) as JSX.Element;
     case "transport":
-      return <FaGasPump />;
+      return FaGasPump({}) as JSX.Element;
     case "clothing":
-      return <FaTshirt />;
+      return FaTshirt({}) as JSX.Element;
     case "salary":
-      return <FaMoneyBillWave />;
+      return FaMoneyBillWave({}) as JSX.Element;
     default:
-      return <FaQuestion />;
+      return FaQuestion({}) as JSX.Element;
   }
 };
 
