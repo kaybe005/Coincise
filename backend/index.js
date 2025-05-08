@@ -9,11 +9,14 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5005;
 
-app.use(cors({
-  origin: ['https://coincise-brown.vercel.app/login'], 
-  credentials: true,
-}));
-
+app.use(
+    cors({
+      origin: ['https://coincise-brown.vercel.app'],
+      credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+    })
+  );
 app.use(express.json());
 
 app.use('/api/transactions', transactionRoutes);
