@@ -36,7 +36,7 @@ export default function Home() {
     if (!user?.email || !token) return;
     try {
       const res = await axios.get(
-        `http://localhost:5005/api/transactions/${user.email}`,
+        `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_URL}/api/transactions/${user.email}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -61,7 +61,7 @@ export default function Home() {
 
     try {
       await axios.post(
-        "http://localhost:5005/api/transactions",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/transactions`,
         {
           ...expense,
           type: expense.type.toLowerCase(),
@@ -82,11 +82,14 @@ export default function Home() {
 
   const handleDeleteTransaction = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:5005/api/transactions/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/transactions/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setTransactions((prev) => prev.filter((tx) => tx._id !== id));
     } catch (err) {
       console.error("Delete failed:", err);

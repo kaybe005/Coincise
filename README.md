@@ -2,8 +2,6 @@
 
 Coincise is a modern full-stack personal finance tracking web app. It helps users manage their income, expenses, and budgets with an intuitive dashboard, interactive charts, and a smooth user experience.
 
-![Coincise Banner](public/banner.png) <!-- Optional banner -->
-
 ## 🔗 Live Demo
 
 🌐 [View Coincise App](https://your-vercel-url.vercel.app)

@@ -46,10 +46,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const res = await axios.post("http://localhost:5005/api/auth/login", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
       const { token, user } = res.data;
       setToken(token);
       setUser(user);
@@ -70,7 +73,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const register = async (name: string, email: string, password: string) => {
     try {
       const res = await axios.post(
-        "http://localhost:5005/api/auth/register",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`,
         { name, email, password },
         {
           headers: {

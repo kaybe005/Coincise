@@ -27,7 +27,7 @@ export default function Reports() {
       if (!user?.email) return;
       try {
         const res = await axios.get(
-          `http://localhost:5005/api/transactions/${user.email}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/transactions/${user.email}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
