@@ -36,7 +36,7 @@ export default function Home() {
     if (!user?.email || !token) return;
     try {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_URL}/api/transactions/${user.email}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/transactions/${user.email}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
