@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 export interface ExpenseData {
+  _id?: string;
   type: string;
   category: string;
   amount: number;
