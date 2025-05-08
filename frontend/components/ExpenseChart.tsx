@@ -43,7 +43,7 @@ const ExpenseChart = ({ transactions }: { transactions: Transaction[] }) => {
       <p className="text-gray-500 text-sm dark:text-white mb-4">
         Expense Breakdown
       </p>
-      <Doughnut data={chartData} /> {/* ✅ FIXED */}
+      <Doughnut data={chartData} />
     </div>
   );
 };

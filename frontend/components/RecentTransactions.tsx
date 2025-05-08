@@ -7,6 +7,7 @@ import {
   FaGasPump,
   FaMoneyBillWave,
   FaQuestion,
+  FaTrashAlt,
 } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 
@@ -38,8 +39,10 @@ const getIconForCategory = (category: string) => {
 
 const RecentTransactions = ({
   transactions,
+  onDelete,
 }: {
   transactions: Transaction[];
+  onDelete: (id: string) => void;
 }) => {
   const { user, token } = useAuth();
   const recent = [...transactions]
@@ -66,9 +69,20 @@ const RecentTransactions = ({
                 {item.category} – {item.description || "No description"}
               </span>
             </div>
-            <span className="text-sm text-[#0A2540] dark:text-white font-medium">
-              {item.type === "expense" ? "–" : "+"}${item.amount.toFixed(2)}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-[#0A2540] dark:text-white font-medium">
+                {item.type === "expense" ? "–" : "+"}${item.amount.toFixed(2)}
+              </span>
+              {item._id && (
+                <button
+                  onClick={() => onDelete(item._id!)}
+                  className="text-red-500 hover:text-red-700 text-sm"
+                  title="Delete"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
           </li>
         ))}
       </ul>

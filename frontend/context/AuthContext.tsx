@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(JSON.parse(storedUser));
     }
 
-    setLoading(false); // Finished loading from localStorage
+    setLoading(false);
   }, []);
 
   const login = async (email: string, password: string) => {
@@ -68,12 +68,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const register = async (name: string, email: string, password: string) => {
-    const res = await axios.post("http://localhost:5005/api/auth/register", {
-      name,
-      email,
-      password,
-    });
-    await login(email, password);
+    try {
+      const res = await axios.post(
+        "http://localhost:5005/api/auth/register",
+        { name, email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const { token, user } = res.data;
+
+      setToken(token);
+      setUser(user);
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+    } catch (err: any) {
+      console.error("Registration error:", err);
+      throw new Error(err.response?.data?.error || "Registration failed");
+    }
   };
 
   return (

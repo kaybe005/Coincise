@@ -32,10 +32,6 @@ export default function Home() {
     }
   }, [user, loading]);
 
-  if (loading) {
-    return <div className="text-center mt-10">Loading...</div>;
-  }
-
   const fetchTransactions = async () => {
     if (!user?.email || !token) return;
     try {
@@ -51,7 +47,11 @@ export default function Home() {
     }
   };
 
-  fetchTransactions();
+  useEffect(() => {
+    if (user && token) {
+      fetchTransactions();
+    }
+  }, [user, token]);
 
   const handleAddExpense = async (expense: ExpenseData) => {
     if (!user?.email || !token) {
@@ -79,6 +79,23 @@ export default function Home() {
       console.error("Error adding transaction:", error);
     }
   };
+
+  const handleDeleteTransaction = async (id: string) => {
+    try {
+      await axios.delete(`http://localhost:5005/api/transactions/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setTransactions((prev) => prev.filter((tx) => tx._id !== id));
+    } catch (err) {
+      console.error("Delete failed:", err);
+    }
+  };
+
+  if (loading) {
+    return <div className="text-center mt-10">Loading...</div>;
+  }
 
   return (
     <>
@@ -114,7 +131,10 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           <IncomeExpenseChart transactions={transactions} />
-          <RecentTransactions transactions={transactions} />
+          <RecentTransactions
+            transactions={transactions}
+            onDelete={handleDeleteTransaction}
+          />
         </div>
       </div>
     </>

@@ -63,9 +63,11 @@ export default function Reports() {
           Monthly Report
         </h1>
 
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {/* Totals - optional enhancements later */}
-        </section>
+        <p className="text-sm text-gray-500 font-bold dark:text-gray-400 mb-9">
+          Track your financial performance at a glance including total income,
+          spending patterns, savings, and the top expenses you've made this
+          month.
+        </p>
 
         <section className="grid-cols-1 grid md:grid-cols-2 gap-6 mb-8">
           <div className="h-full">
@@ -114,8 +116,11 @@ export default function Reports() {
               </thead>
               <tbody>
                 {topExpenses.map((exp, idx) => (
-                  <tr key={idx} className="bg-white border-b hover:bg-gray-50">
-                    <td className="px-4 py-2 font-medium text-[#0A2540]">
+                  <tr
+                    key={idx}
+                    className="bg-white dark:bg-[#0A2540] border-b hover:bg-gray-50"
+                  >
+                    <td className="px-4 py-2 font-medium text-[#0A2540] dark:text-white">
                       {exp.category}
                     </td>
                     <td className="px-4 py-2 text-red-600">
